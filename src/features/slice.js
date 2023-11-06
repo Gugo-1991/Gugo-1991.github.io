@@ -14,7 +14,7 @@ export const columnSlice = createSlice({
       const newItem = {
         id: action.payload.id,
         title: action.payload.title,
-        status: "To-do",
+        status: "Backlog",
         description: action.payload.description,
       };
       const newState = [...state, newItem];

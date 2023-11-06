@@ -4,8 +4,8 @@ import { changeStatus } from "../features/slice";
 
 function CustomDropdown({ status, id }) {
   const dispatch = useDispatch();
-  const [selectedValue, setSelectedValue] = useState("");
-  const options = ["To-do", "In process", "Done"];
+  const [selectedValue, setSelectedValue] = useState(status);
+  const options = ["Backlog", "In process", "Done"];
 
   const handleSelectChange = (newValue, id) => {
     setSelectedValue(newValue);
@@ -27,7 +27,7 @@ function CustomDropdown({ status, id }) {
     <div className="custom-dropdown">
       <select
         id={id}
-        defaultValue={status}
+        defaultValue={selectedValue}
         // value={selectedValue}
         onChange={(e) => handleSelectChange(e.target.value, id)}>
         {item}

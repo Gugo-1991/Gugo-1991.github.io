@@ -6,13 +6,14 @@ function Content({ item }) {
   return (
     <Fragment>
       <div className="content" key={Math.random()}>
-        <div className="" key={Math.random()}>
+        <div className="itemTitle" key={Math.random()}>
           {item.title}
         </div>
-        <CustomDropdown status={item.status} id={item.id} />
-        <div className="" key={Math.random()}>
+
+        <div className="description" key={Math.random()}>
           {item.description ? item.description : "no desctiption"}
         </div>
+        <CustomDropdown status={item.status} id={item.id} />
       </div>
     </Fragment>
   );
