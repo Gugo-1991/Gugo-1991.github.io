@@ -9,3 +9,8 @@
   align-items: center;
   gap: 20px;
 }
+.header-form {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
