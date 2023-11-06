@@ -4,7 +4,7 @@ import Header from "./header/headerCreator";
 
 function App() {
   return (
-    <section className="app-content">
+    <section className="app-content" key={Math.random()}>
       <Header />
       <Columns />
     </section>
