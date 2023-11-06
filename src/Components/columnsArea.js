@@ -4,7 +4,7 @@ import Column from "./columnCreator";
 import "react-dropdown/style.css";
 
 function Columns() {
-  const statuses = ["To-do", "In process ", "Done"];
+  const statuses = ["To-do", "In process", "Done"];
   return (
     <Fragment>
       <section className="columnsArea" key={Math.random()}>

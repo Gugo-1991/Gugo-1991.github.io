@@ -6,8 +6,6 @@ import { selectContent } from "../features/slice";
 
 function Column({ status }) {
   const value = useSelector(selectContent);
-  console.log(value);
-
   return (
     <Fragment>
       <div className="column">
