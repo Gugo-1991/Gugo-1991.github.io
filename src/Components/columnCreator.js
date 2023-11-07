@@ -1,22 +1,21 @@
 import { Fragment } from "react";
 import "./style.css";
-import Content from "./contentCreator";
+import Card from "./cardCreator";
 import { useDispatch, useSelector } from "react-redux";
 import { changeStatus, selectContent } from "../features/slice";
 import { useDrop } from "react-dnd";
 
-function Column({ items }) {
+function Column({ status }) {
   const dispatch = useDispatch();
   const handleSelectChange = (id) => {
     dispatch(
       changeStatus({
         id: id,
-        status: items.name,
+        status: status,
       })
     );
   };
   const value = useSelector(selectContent);
-
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "content",
     drop: (item) => addContentToBoard(item.id),
@@ -27,16 +26,17 @@ function Column({ items }) {
   const addContentToBoard = (id) => {
     handleSelectChange(id);
   };
+
   return (
     <Fragment>
       <div className="column" ref={drop}>
         <div className="statusName" key={Math.random()}>
-          {items.name}
-          <div>{items.count}</div>
+          {status}
+          {/* <div>{items}</div> */}
         </div>
         {value.map((item) => {
-          if (item.status === items.name) {
-            return <Content key={Math.random()} item={item} />;
+          if (item.status === status) {
+            return <Card key={Math.random()} item={item} />;
           }
           return null;
         })}

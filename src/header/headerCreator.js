@@ -1,19 +1,18 @@
-import { Fragment, useState } from "react";
+import { Fragment, useId, useState } from "react";
 import "./header.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, selectContent } from "../features/slice";
+import { addItem } from "../features/slice";
+import { v4 as uuidv4 } from "uuid";
 
 function Header() {
   const dispatch = useDispatch();
-  const item = useSelector(selectContent);
-
   const [titleValue, setTitleValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
-  const handeSubmit = () => {
+  const handleSubmit = () => {
     if (titleValue) {
       dispatch(
         addItem({
-          id: item.length + 1,
+          id: uuidv4(),
           title: titleValue,
           description: descriptionValue,
         })
@@ -24,8 +23,8 @@ function Header() {
   };
 
   return (
-    <section className="header">
-      <button onClick={handeSubmit} className="addButton">
+    <form className="header" onSubmit={handleSubmit}>
+      <button onClick={handleSubmit} className="addButton">
         +
       </button>
 
@@ -41,7 +40,7 @@ function Header() {
         className="titleInput"
         type="text"
         placeholder="Description..."></input>
-    </section>
+    </form>
   );
 }
 

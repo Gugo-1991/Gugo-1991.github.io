@@ -2,7 +2,17 @@ import { Fragment } from "react";
 import "./style.css";
 import CustomDropdown from "./dropdown";
 import { useDrag } from "react-dnd";
-function Content({ item }) {
+import { useDispatch } from "react-redux";
+import { deleteItem } from "../features/slice";
+function Card({ item }) {
+  const dispatch = useDispatch();
+  const handleSubmit = (id) => {
+    dispatch(
+      deleteItem({
+        id: id,
+      })
+    );
+  };
   const [{ isDraging }, drag] = useDrag(() => ({
     type: "content",
     item: { id: item.id },
@@ -16,6 +26,9 @@ function Content({ item }) {
       <div className="content" key={Math.random()} ref={drag}>
         <div className="itemTitle" key={Math.random()}>
           {item.title}
+          <button className="deleteCard" onClick={() => handleSubmit(item.id)}>
+            x
+          </button>
         </div>
 
         <div className="description" key={Math.random()}>
@@ -27,4 +40,4 @@ function Content({ item }) {
   );
 }
 
-export default Content;
+export default Card;

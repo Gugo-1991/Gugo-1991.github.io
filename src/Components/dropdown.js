@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { changeStatus } from "../features/slice";
+import { statuses } from "./status";
 
 function CustomDropdown({ status, id }) {
   const dispatch = useDispatch();
   const [selectedValue, setSelectedValue] = useState(status);
-  const options = ["Backlog", "In process", "Done"];
 
   const handleSelectChange = (newValue, id) => {
     setSelectedValue(newValue);
@@ -17,7 +17,7 @@ function CustomDropdown({ status, id }) {
     );
   };
 
-  const item = options.map((e) => (
+  const item = statuses.map((e) => (
     <option key={e} value={e}>
       {e}
     </option>
