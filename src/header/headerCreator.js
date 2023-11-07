@@ -1,19 +1,26 @@
 import { Fragment, useState } from "react";
 import "./header.css";
-import { useDispatch } from "react-redux";
-import { addItem } from "../features/slice";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem, selectContent } from "../features/slice";
 
 function Header() {
   const dispatch = useDispatch();
+  const item = useSelector(selectContent);
+
   const [titleValue, setTitleValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
   const handeSubmit = () => {
-    dispatch(
-      addItem({
-        title: titleValue,
-        description: descriptionValue,
-      })
-    );
+    if (titleValue) {
+      dispatch(
+        addItem({
+          id: item.length + 1,
+          title: titleValue,
+          description: descriptionValue,
+        })
+      );
+    }
+    setTitleValue("");
+    setDescriptionValue("");
   };
 
   return (

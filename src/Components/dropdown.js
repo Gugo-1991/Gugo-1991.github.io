@@ -1,11 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { changeStatus } from "../features/slice";
 
-function CustomDropdown({ status }) {
-  const [selectedValue, setSelectedValue] = useState("");
-  const options = ["To-do", "In process", "Done"];
+function CustomDropdown({ status, id }) {
+  const dispatch = useDispatch();
+  const [selectedValue, setSelectedValue] = useState(status);
+  const options = ["Backlog", "In process", "Done"];
 
-  const handleSelectChange = (newValue) => {
+  const handleSelectChange = (newValue, id) => {
     setSelectedValue(newValue);
+    dispatch(
+      changeStatus({
+        id: id,
+        status: newValue,
+      })
+    );
   };
 
   const item = options.map((e) => (
@@ -17,9 +26,10 @@ function CustomDropdown({ status }) {
   return (
     <div className="custom-dropdown">
       <select
-        defaultValue={status}
+        id={id}
+        defaultValue={selectedValue}
         // value={selectedValue}
-        onChange={(e) => handleSelectChange(e.target.value)}>
+        onChange={(e) => handleSelectChange(e.target.value, id)}>
         {item}
       </select>
     </div>

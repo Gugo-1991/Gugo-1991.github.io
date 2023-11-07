@@ -4,18 +4,17 @@ import Content from "./contentCreator";
 import { useSelector } from "react-redux";
 import { selectContent } from "../features/slice";
 
-function Column({ status }) {
+function Column({ items }) {
   const value = useSelector(selectContent);
-  console.log(value);
-
   return (
     <Fragment>
       <div className="column">
         <div className="statusName" key={Math.random()}>
-          {status}
+          {items.name}
+          <div>{items.count}</div>
         </div>
         {value.map((item) => {
-          if (item.status === status) {
+          if (item.status === items.name) {
             return <Content key={Math.random()} item={item} />;
           }
           return null;
