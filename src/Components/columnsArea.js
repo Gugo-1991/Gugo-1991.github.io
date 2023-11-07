@@ -7,7 +7,6 @@ import { selectContent } from "../features/slice";
 
 function Columns() {
   const value = useSelector(selectContent);
-  console.log(value);
   let Backlog = 0;
   let Inprocess = 0;
   let Done = 0;
@@ -20,7 +19,6 @@ function Columns() {
       Done++;
     }
   }
-  console.log(Backlog, Inprocess, Done);
   const statuses = [
     {
       name: "Backlog",
