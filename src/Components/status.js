@@ -1,1 +1,1 @@
-export const statuses = ["Backlog", "In Progress", "In Review", "Done"];
+export const statuses = ["Backlog", "In Process", "In Review", "Done"];

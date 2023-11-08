@@ -4,24 +4,8 @@ import Column from "./columnCreator";
 import "react-dropdown/style.css";
 
 import { statuses } from "./status";
-import { useSelector } from "react-redux";
-import { selectContent } from "../features/slice";
 
 function Columns() {
-  const value = useSelector(selectContent);
-  let Backlog = 0;
-  let Inprocess = 0;
-  let Done = 0;
-  // for (let i = 0; i < value.length; i++) {
-  //   if (value[i].status === "Backlog") {
-  //     Backlog += 1;
-  //   } else if (value[i].status === "In process") {
-  //     Inprocess++;
-  //   } else if (value[i].status === "Done") {
-  //     Done++;
-  //   }
-  // }
-
   return (
     <Fragment>
       <section className="columnsArea" key={Math.random()}>

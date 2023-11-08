@@ -6,6 +6,25 @@ import { changeStatus, selectContent } from "../features/slice";
 import { useDrop } from "react-dnd";
 
 function Column({ status }) {
+  const value = useSelector(selectContent);
+
+  const statusCounts = {
+    Backlog: 0,
+    "In Process": 0,
+    "In Review": 0,
+    Done: 0,
+  };
+
+  value.forEach((item) => {
+    const status = item.status;
+    if (statusCounts.hasOwnProperty(status)) {
+      statusCounts[status]++;
+    }
+  });
+  const statusArray = Object.entries(statusCounts).map(([key, value]) => ({
+    status: key,
+    count: value,
+  }));
   const dispatch = useDispatch();
   const handleSelectChange = (id) => {
     dispatch(
@@ -15,7 +34,6 @@ function Column({ status }) {
       })
     );
   };
-  const value = useSelector(selectContent);
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "content",
     drop: (item) => addContentToBoard(item.id),
@@ -26,13 +44,18 @@ function Column({ status }) {
   const addContentToBoard = (id) => {
     handleSelectChange(id);
   };
-
   return (
     <Fragment>
       <div className="column" ref={drop}>
         <div className="statusName" key={Math.random()}>
           {status}
-          {/* <div>{items}</div> */}
+          <div>
+            {statusArray.map((e) => {
+              if (e.status === status) {
+                return e.count;
+              }
+            })}
+          </div>
         </div>
         {value.map((item) => {
           if (item.status === status) {
