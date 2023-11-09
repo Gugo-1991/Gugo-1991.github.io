@@ -22,12 +22,10 @@
   min-height: 30rem;
 }
 .columnsPosition {
+  display: flex;
   justify-content: space-around;
   margin-top: 5rem;
   width: 100%;
-  display: grid;
-  row-gap: 1rem;
-  grid-template-columns: auto auto auto;
   background: #f4f7ff;
   padding: 0.5rem;
 }
@@ -85,7 +83,9 @@
   font-size: 0.9rem;
 }
 .itemTitle {
-  width: 11rem;
+  display: flex;
+  justify-content: space-between;
+  width: 10rem;
   color: #232968;
   font-family: Roboto;
   font-size: 18px;
@@ -95,4 +95,9 @@
 }
 .description {
   font-size: 0.8rem;
+}
+.deleteCard {
+  border: none;
+  background-color: transparent;
+  font-size: 1.2rem;
 }

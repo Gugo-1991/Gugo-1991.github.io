@@ -37,10 +37,17 @@ export const columnSlice = createSlice({
         });
       }
     },
+    deleteItem: (state, action) => {
+      const newState = state.filter((item) => item.id !== action.payload.id);
+
+      localStorage.setItem("items", JSON.stringify(newState));
+
+      return newState;
+    },
   },
 });
 
-export const { addItem, changeStatus } = columnSlice.actions;
+export const { addItem, changeStatus, deleteItem } = columnSlice.actions;
 export const selectContent = (state) => state.column;
 
 export default columnSlice.reducer;
