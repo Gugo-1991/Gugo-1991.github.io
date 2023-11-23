@@ -1,46 +1,70 @@
-import { Fragment, useId, useState } from "react";
+import { useReducer } from "react";
 import "./header.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem } from "../features/slice";
 import { v4 as uuidv4 } from "uuid";
 
+const initialState = { title: "", description: "" };
+
+function reducer(state, action) {
+  console.log(state);
+  switch (action.type) {
+    case "title":
+      return { ...state, title: action.payload };
+    case "description":
+      return { ...state, description: action.payload };
+    default:
+      throw new Error();
+  }
+}
+
 function Header() {
   const dispatch = useDispatch();
-  const [titleValue, setTitleValue] = useState("");
-  const [descriptionValue, setDescriptionValue] = useState("");
+  const [state, dispatchState] = useReducer(reducer, initialState);
+
   const handleSubmit = () => {
-    if (titleValue) {
+    if (state.title) {
       dispatch(
         addItem({
           id: uuidv4(),
-          title: titleValue,
-          description: descriptionValue,
+          title: state.title,
+          description: state.description,
         })
       );
     }
-    setTitleValue("");
-    setDescriptionValue("");
+    dispatchState({ type: "title", payload: "" });
+    dispatchState({ type: "description", payload: "" });
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSubmit();
+    }
   };
 
   return (
-    <form className="header" onSubmit={handleSubmit}>
-      <button onClick={handleSubmit} className="addButton">
-        +
-      </button>
-
+    <div className="header">
       <input
-        value={titleValue}
-        onChange={(e) => setTitleValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        value={state.title}
+        onChange={(e) =>
+          dispatchState({ type: "title", payload: e.target.value })
+        }
         className="titleInput"
         type="text"
         placeholder="Title..."></input>
       <input
-        value={descriptionValue}
-        onChange={(e) => setDescriptionValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        value={state.description}
+        onChange={(e) =>
+          dispatchState({ type: "description", payload: e.target.value })
+        }
         className="titleInput"
         type="text"
         placeholder="Description..."></input>
-    </form>
+      <button onClick={handleSubmit} className="addButton">
+        Add Card
+      </button>
+    </div>
   );
 }
 
