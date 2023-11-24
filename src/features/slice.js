@@ -26,6 +26,7 @@ export const columnSlice = createSlice({
       const itemToUpdate = state.filter(
         (item) => item.id === action.payload.id
       );
+
       if (itemToUpdate) {
         state.map((item) => {
           if (item.id === action.payload.id) {

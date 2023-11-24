@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from "uuid";
 const initialState = { title: "", description: "" };
 
 function reducer(state, action) {
-  console.log(state);
   switch (action.type) {
     case "title":
       return { ...state, title: action.payload };
