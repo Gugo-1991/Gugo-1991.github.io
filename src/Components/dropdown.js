@@ -3,9 +3,19 @@ import { useDispatch } from "react-redux";
 import { changeStatus } from "../features/slice";
 import { statuses } from "./status";
 
-function CustomDropdown({ status, id }) {
+function CustomDropdown({ items }) {
+  const index = statuses.indexOf(items.status);
+  const arr =
+    index !== -1
+      ? index === 0
+        ? [statuses[index], statuses[index + 1]]
+        : index !== 0
+        ? [statuses[index], statuses[index - 1], statuses[index + 1]]
+        : [statuses[index + 1]]
+      : [];
+
   const dispatch = useDispatch();
-  const [selectedValue, setSelectedValue] = useState(status);
+  const [selectedValue, setSelectedValue] = useState(items.status);
 
   const handleSelectChange = (newValue, id) => {
     setSelectedValue(newValue);
@@ -22,15 +32,19 @@ function CustomDropdown({ status, id }) {
       {e}
     </option>
   ));
+  const item2 = arr.map((e) => (
+    <option key={e} value={e}>
+      {e}
+    </option>
+  ));
 
   return (
     <div className="custom-dropdown">
       <select
-        id={id}
+        id={items.id}
         defaultValue={selectedValue}
-        // value={selectedValue}
-        onChange={(e) => handleSelectChange(e.target.value, id)}>
-        {item}
+        onChange={(e) => handleSelectChange(e.target.value, items.id)}>
+        {items.rule === "Task" ? item : item2}
       </select>
     </div>
   );

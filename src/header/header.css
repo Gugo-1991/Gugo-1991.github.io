@@ -14,3 +14,29 @@
   gap: 1rem;
   padding: 1rem;
 }
+.rule-dropdown {
+  width: auto;
+  display: inline-flex;
+  height: 1.4rem;
+  padding: 0 0.5rem 0 0.4rem;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.9rem;
+  flex-shrink: 0;
+  border-radius: 0.1rem;
+  background: #226ab2;
+  color: red;
+}
+.rule-dropdown select {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  font-size: 0.9rem;
+}
+.label-for-drp {
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  color: rgb(68, 67, 67);
+}

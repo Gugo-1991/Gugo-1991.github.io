@@ -3,8 +3,9 @@ import "./header.css";
 import { useDispatch } from "react-redux";
 import { addItem } from "../features/slice";
 import { v4 as uuidv4 } from "uuid";
+import { rule } from "../Components/status";
 
-const initialState = { title: "", description: "" };
+const initialState = { title: "", description: "", rule: "Task" };
 
 function reducer(state, action) {
   switch (action.type) {
@@ -12,6 +13,10 @@ function reducer(state, action) {
       return { ...state, title: action.payload };
     case "description":
       return { ...state, description: action.payload };
+    case "rule":
+      return { ...state, rule: action.payload };
+    case "clear":
+      return { ...state, title: "", description: "", rule: "Task" };
     default:
       throw new Error();
   }
@@ -28,18 +33,22 @@ function Header() {
           id: uuidv4(),
           title: state.title,
           description: state.description,
+          rule: state.rule,
         })
       );
     }
-    dispatchState({ type: "title", payload: "" });
-    dispatchState({ type: "description", payload: "" });
+    dispatchState({ type: "clear" });
   };
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       handleSubmit();
     }
   };
-
+  const item = rule.map((e) => (
+    <option key={e} value={e}>
+      {e}
+    </option>
+  ));
   return (
     <div className="header">
       <input
@@ -60,6 +69,19 @@ function Header() {
         className="titleInput"
         type="text"
         placeholder="Description..."></input>
+      <div className="rule">
+        <label className="label-for-drp">Select Rule </label>
+        <div className="rule-dropdown">
+          <select
+            key={Math.random()}
+            value={state.rule}
+            onChange={(e) =>
+              dispatchState({ type: "rule", payload: e.target.value })
+            }>
+            {item}
+          </select>
+        </div>
+      </div>
       <button onClick={handleSubmit} className="addButton">
         Add Card
       </button>

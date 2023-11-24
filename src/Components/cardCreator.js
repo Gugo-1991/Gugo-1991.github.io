@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import "./style.css";
 import CustomDropdown from "./dropdown";
 import { useDispatch } from "react-redux";
-import { changeStatus, deleteItem } from "../features/slice";
+import { deleteItem } from "../features/slice";
 
 function Card({ item }) {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function Card({ item }) {
         onDragStart={(e) => {
           dragstart(e, item.id);
         }}
-        className="content"
+        className={item.rule}
         key={Math.random()}>
         <div className="itemTitle" key={item.id}>
           {item.title}
@@ -37,7 +37,7 @@ function Card({ item }) {
         <div className="description" key={Math.random()}>
           {item.description ? item.description : "no desctiption"}
         </div>
-        <CustomDropdown status={item.status} id={item.id} />
+        <CustomDropdown items={item} />
       </div>
     </Fragment>
   );
