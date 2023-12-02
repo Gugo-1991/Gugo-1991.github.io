@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { statuses } from "../Components/status";
 const storedItems = localStorage.getItem("items");
 let initialState = [];
 if (storedItems) {
@@ -16,6 +17,7 @@ export const columnSlice = createSlice({
         title: action.payload.title,
         status: "Backlog",
         description: action.payload.description,
+        rule: action.payload.rule,
       };
       const newState = [...state, newItem];
       localStorage.setItem("items", JSON.stringify(newState));
@@ -23,20 +25,33 @@ export const columnSlice = createSlice({
     },
 
     changeStatus: (state, action) => {
-      const itemToUpdate = state.filter(
-        (item) => item.id === action.payload.id
-      );
-      if (itemToUpdate) {
-        state.map((item) => {
-          if (item.id === action.payload.id) {
-            item.status = action.payload.status;
+      const { id, status } = action.payload;
+      const itemToUpdate = state.find((item) => item.id === id);
 
+      if (itemToUpdate && itemToUpdate.rule !== "Task") {
+        const currentIndex = statuses.indexOf(itemToUpdate.status);
+        const targetIndex = statuses.indexOf(status);
+
+        if (
+          currentIndex !== -1 &&
+          targetIndex !== -1 &&
+          (targetIndex === currentIndex + 1 || targetIndex === currentIndex - 1)
+        ) {
+          itemToUpdate.status = status;
+          localStorage.setItem("items", JSON.stringify([...state]));
+        }
+      }
+
+      if (itemToUpdate && itemToUpdate.rule === "Task") {
+        state.forEach((item) => {
+          if (item.id === id) {
+            item.status = status;
             localStorage.setItem("items", JSON.stringify([...state]));
           }
-          return item;
         });
       }
     },
+
     deleteItem: (state, action) => {
       const newState = state.filter((item) => item.id !== action.payload.id);
 

@@ -1,13 +1,12 @@
 import { Fragment } from "react";
 import "./style.css";
-import Card from "./cardCreator";
 import { useDispatch, useSelector } from "react-redux";
-import { changeStatus, selectContent } from "../features/slice";
-import { useDrop } from "react-dnd";
+import { changeStatus, deleteItem, selectContent } from "../features/slice";
+import Card from "./cardCreator";
 
 function Column({ status }) {
+  const dispatch = useDispatch();
   const value = useSelector(selectContent);
-
   const statusCounts = {
     Backlog: 0,
     "In Process": 0,
@@ -25,28 +24,30 @@ function Column({ status }) {
     status: key,
     count: value,
   }));
-  const dispatch = useDispatch();
-  const handleSelectChange = (id) => {
+
+  const handleSelectChange = (id, itemStatus) => {
     dispatch(
       changeStatus({
         id: id,
-        status: status,
+        status: itemStatus,
       })
     );
   };
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: "content",
-    drop: (item) => addContentToBoard(item.id),
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
-  }));
-  const addContentToBoard = (id) => {
-    handleSelectChange(id);
-  };
+
+  function drop(e, status) {
+    const dragFlag = e.dataTransfer.getData("dragItem");
+    handleSelectChange(dragFlag, status);
+  }
+  function dragOver(e) {
+    e.preventDefault();
+  }
+
   return (
     <Fragment>
-      <div className="column" ref={drop}>
+      <div
+        className="column"
+        onDrop={(e) => drop(e, status)}
+        onDragOver={(e) => dragOver(e)}>
         <div className="statusName" key={Math.random()}>
           {status}
           <div>

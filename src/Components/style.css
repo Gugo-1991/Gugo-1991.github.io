@@ -1,8 +1,8 @@
 .addButton {
   border: none;
-  font-size: 1.7rem;
+  font-size: 1rem;
   border-radius: 0.3rem;
-  width: 3rem;
+  width: 5rem;
   height: 3rem;
   color: azure;
   background-color: rgb(52, 52, 246);
@@ -53,7 +53,9 @@
   font-weight: 500;
   line-height: normal;
 }
-.content {
+.Task,
+.Bag,
+.Story {
   padding: 0.5rem;
   gap: 0.5rem;
   display: flex;
@@ -66,7 +68,7 @@
   box-shadow: 0.1rem 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.18);
 }
 .content:hover {
-  padding: 1rem;
+  padding: 0.7rem;
 }
 .content:active {
   background-color: rgb(114, 164, 114);
@@ -109,4 +111,10 @@
   border: none;
   background-color: transparent;
   font-size: 1.2rem;
+}
+.Bag {
+  background-color: red;
+}
+.Story {
+  background-color: yellow;
 }
