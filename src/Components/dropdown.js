@@ -28,19 +28,20 @@ function CustomDropdown({ items }) {
   };
 
   const item = statuses.map((e) => (
-    <option key={e} value={e}>
+    <option key={Math.random()} value={e}>
       {e}
     </option>
   ));
   const item2 = arr.map((e) => (
-    <option key={e} value={e}>
+    <option key={Math.random()} value={e}>
       {e}
     </option>
   ));
 
   return (
-    <div className="custom-dropdown">
+    <div key={Math.random()} className="custom-dropdown">
       <select
+        key={Math.random()}
         id={items.id}
         defaultValue={selectedValue}
         onChange={(e) => handleSelectChange(e.target.value, items.id)}>
