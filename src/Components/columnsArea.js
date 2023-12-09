@@ -14,7 +14,6 @@ function Columns() {
             return <Column key={Math.random()} status={e} />;
           })}
         </div>
-        ;
       </section>
     </Fragment>
   );

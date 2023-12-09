@@ -1,7 +1,6 @@
-import { Fragment } from "react";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { changeStatus, deleteItem, selectContent } from "../features/slice";
+import { changeStatus, selectContent } from "../features/slice";
 import Card from "./cardCreator";
 
 function Column({ status }) {
@@ -43,8 +42,9 @@ function Column({ status }) {
   }
 
   return (
-    <Fragment>
+    <div>
       <div
+        key={Math.random()}
         className="column"
         onDrop={(e) => drop(e, status)}
         onDragOver={(e) => dragOver(e)}>
@@ -65,7 +65,7 @@ function Column({ status }) {
           return null;
         })}
       </div>
-    </Fragment>
+    </div>
   );
 }
 export default Column;
