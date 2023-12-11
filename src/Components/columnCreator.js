@@ -1,12 +1,18 @@
+import React from "react";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeStatus, selectContent } from "../features/slice";
 import Card from "./cardCreator";
 
-function Column({ status }) {
+interface ColumnProps {
+  status: string;
+}
+
+const Column: React.FC<ColumnProps> = ({ status }): JSX.Element => {
   const dispatch = useDispatch();
   const value = useSelector(selectContent);
-  const statusCounts = {
+
+  const statusCounts: Record<string, number> = {
     Backlog: 0,
     "In Process": 0,
     "In Review": 0,
@@ -14,17 +20,18 @@ function Column({ status }) {
   };
 
   value.forEach((item) => {
-    const status = item.status;
-    if (statusCounts.hasOwnProperty(status)) {
-      statusCounts[status]++;
+    const itemStatus = item.status;
+    if (statusCounts.hasOwnProperty(itemStatus)) {
+      statusCounts[itemStatus]++;
     }
   });
+
   const statusArray = Object.entries(statusCounts).map(([key, value]) => ({
     status: key,
     count: value,
   }));
 
-  const handleSelectChange = (id, itemStatus) => {
+  const handleSelectChange = (id: string, itemStatus: string) => {
     dispatch(
       changeStatus({
         id: id,
@@ -33,13 +40,14 @@ function Column({ status }) {
     );
   };
 
-  function drop(e, status) {
+  const drop = (e: React.DragEvent<HTMLDivElement>, newStatus: string) => {
     const dragFlag = e.dataTransfer.getData("dragItem");
-    handleSelectChange(dragFlag, status);
-  }
-  function dragOver(e) {
+    handleSelectChange(dragFlag, newStatus);
+  };
+
+  const dragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-  }
+  };
 
   return (
     <div>
@@ -55,6 +63,7 @@ function Column({ status }) {
               if (e.status === status) {
                 return e.count;
               }
+              return null;
             })}
           </div>
         </div>
@@ -67,5 +76,6 @@ function Column({ status }) {
       </div>
     </div>
   );
-}
+};
+
 export default Column;
