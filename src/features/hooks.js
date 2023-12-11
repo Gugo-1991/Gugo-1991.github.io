@@ -1,6 +1,15 @@
 import { statuses } from "../Components/status";
 
-export const ChangeStatus = (state, action) => {
+interface Item {
+  id: number;
+  rule: string;
+  status: string;
+}
+
+export const ChangeStatus = (
+  state: Item[],
+  action: { payload: { id: number, status: string } }
+) => {
   const { id, status } = action.payload;
   const itemToUpdate = state.find((item) => item.id === id);
 

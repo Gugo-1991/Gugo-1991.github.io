@@ -3,7 +3,15 @@ import { useDispatch } from "react-redux";
 import { changeStatus } from "../features/slice";
 import { statuses } from "./status";
 
-function CustomDropdown({ items }) {
+interface CustomDropdownProps {
+  items: {
+    id: string,
+    status: string,
+    rule: string,
+  };
+}
+
+function CustomDropdown({ items }: CustomDropdownProps): JSX.Element {
   const index = statuses.indexOf(items.status);
   const arr =
     index !== -1
@@ -17,7 +25,7 @@ function CustomDropdown({ items }) {
   const dispatch = useDispatch();
   const [selectedValue, setSelectedValue] = useState(items.status);
 
-  const handleSelectChange = (newValue, id) => {
+  const handleSelectChange = (newValue: string, id: string) => {
     setSelectedValue(newValue);
     dispatch(
       changeStatus({

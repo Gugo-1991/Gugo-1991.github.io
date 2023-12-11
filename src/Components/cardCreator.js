@@ -1,22 +1,28 @@
-import { Fragment } from "react";
+import React, { Fragment, FC } from "react";
 import "./style.css";
 import CustomDropdown from "./dropdown";
 import { useDispatch } from "react-redux";
 import { deleteItem } from "../features/slice";
 
-function Card({ item }) {
+interface CardProps {
+  item: {
+    id: number,
+    rule: string,
+    title: string,
+    description?: string,
+  };
+}
+
+const Card: FC<CardProps> = ({ item }): JSX.Element => {
   const dispatch = useDispatch();
 
-  const handleSubmit = (id) => {
-    dispatch(
-      deleteItem({
-        id: id,
-      })
-    );
+  const handleSubmit = (id: number) => {
+    dispatch(deleteItem({ id }));
   };
-  function dragstart(e, item) {
-    e.dataTransfer.setData("dragItem", item);
-  }
+
+  const dragstart = (e: React.DragEvent<HTMLDivElement>, itemId: number) => {
+    e.dataTransfer.setData("dragItem", String(itemId));
+  };
 
   return (
     <Fragment>
@@ -35,12 +41,12 @@ function Card({ item }) {
         </div>
 
         <div className="description" key={Math.random()}>
-          {item.description ? item.description : "no desctiption"}
+          {item.description ? item.description : "no description"}
         </div>
         <CustomDropdown items={item} />
       </div>
     </Fragment>
   );
-}
+};
 
 export default Card;

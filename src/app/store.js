@@ -1,8 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { columnSlice } from "../features/slice";
+import { columnSlice, ColumnState } from "../features/slice";
+
+interface RootState {
+  column: ColumnState;
+}
 
 export const store = configureStore({
   reducer: {
     column: columnSlice.reducer,
   },
 });
+
+export type AppDispatch = typeof store.dispatch;
+export type AppThunk = ThunkAction<void, RootState, null, Action<string>>;
